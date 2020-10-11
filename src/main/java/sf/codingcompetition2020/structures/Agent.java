@@ -8,8 +8,13 @@ public class Agent {
 	private String firstName;
 	private String lastName;
 	
-	public Agent() {
-		
+	public Agent(String args) {
+		String[] arguments = args.split(",");
+		agentId = Integer.parseInt(arguments[0]);
+		area = arguments[1];
+		language = arguments[2];
+		firstName = arguments[3];
+		lastName = arguments[4];
 	}
 	
 	public Agent(int agentId, String area, String language, String firstName, String lastName) {

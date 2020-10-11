@@ -6,7 +6,13 @@ public class Claim {
 	private boolean closed;
 	private int monthsOpen;
 	
-	public Claim() {}
+	public Claim(String args) {
+		String[] arguments = args.split(",");
+		claimId = Integer.parseInt(arguments[0]);
+		customerId = Integer.parseInt(arguments[1]);
+		closed = arguments[2].equals("true");
+		monthsOpen = Integer.parseInt(arguments[3]);
+	}
 	
 	public Claim(int claimId, int customerId, boolean closed, int monthsOpen) {
 		super();

@@ -1,11 +1,13 @@
 package sf.codingcompetition2020.structures;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Customer {
 	private int customerId;
@@ -24,7 +26,54 @@ public class Customer {
 	private short yearsOfService;
 	private Integer vehiclesInsured;
 	
-	public Customer() {}
+	public Customer(String args) {
+		//System.out.println(args);
+		args = args.replaceAll(",,", ",~,");
+		args = args.replaceAll("\",\"", " ~ ");
+		args = args.replaceAll("},", "}~");
+		
+		String[] arguments = args.split(",");
+		
+		//System.out.println(Arrays.asList(arguments));
+		
+		customerId = Integer.parseInt(arguments[0]);
+		firstName = arguments[1];
+		lastName = arguments[2];
+		age = Integer.parseInt(arguments[3]);
+		area = arguments[4];
+		agentId = Integer.parseInt(arguments[5]);
+		agentRating = Short.parseShort(arguments[6]);
+		primaryLanguage = arguments[7];
+		
+		homePolicy = arguments[9].equals("true");
+		autoPolicy = arguments[10].equals("true");
+		rentersPolicy = arguments[11].equals("true");
+		totalMonthlyPremium = arguments[12];
+		yearsOfService = Short.parseShort(arguments[13]);
+		vehiclesInsured = Integer.parseInt(arguments[14]);
+		
+		dependents = new ArrayList<Dependent>();
+		if (!arguments[8].equals("~")) {
+			String json = arguments[8];
+			json = json.replaceAll(" ~ ", "\",\"");
+			json = json.replaceAll("}~", "},");
+			json = json.replaceAll("\"\"", "\"");
+			json = json.substring(1, json.length() - 1);
+			
+			try {
+			     JSONArray jsonArray = new JSONArray(json);
+			     
+			     for (int i = 0 ; i < jsonArray.length(); i++) {
+			         JSONObject obj = jsonArray.getJSONObject(i);
+			         Dependent dependent = new Dependent(obj.getString("firstName"), obj.getString("lastName"));
+			         dependents.add(dependent);
+			     }
+			     
+			} catch (JSONException err){
+			     System.out.println("error");
+			}
+		}
+	}
 	
 	public Customer(int customerId, String firstName, String lastName, int age, String area, int agentId,
 			short agentRating, String primaryLanguage, List<Dependent> dependents, boolean homePolicy,
