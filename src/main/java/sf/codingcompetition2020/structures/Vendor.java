@@ -6,7 +6,13 @@ public class Vendor {
 	private int vendorRating;
 	private boolean inScope;
 	
-	public Vendor() {}
+	public Vendor(String args) {
+		String[] arguments = args.split(",");
+		vendorId = Integer.parseInt(arguments[0]);
+		area = arguments[1];
+		vendorRating = Integer.parseInt(arguments[2]);
+		inScope = arguments[3].equals("true");
+	}
 	
 	public Vendor(int vendorId, String area, int vendorRating, boolean inScope) {
 		super();

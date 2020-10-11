@@ -36,8 +36,6 @@ public class CodingCompCsvUtil {
 	 */
 	public <T> List<T> readCsvFile(String filePath, Class<T> classType) {
 		
-		
-		
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new File(filePath));
@@ -135,7 +133,18 @@ public class CodingCompCsvUtil {
 	 * @return -- List of customers who’ve made an inquiry for a policy but have not signed up.
 	 */
 	public List<Customer> getLeadsForInsurance(String filePath) {
-		return null;
+		
+		List<Customer> customers = readCsvFile(filePath, Customer.class);
+		List<Customer> noPolicies = new ArrayList<Customer>();
+		
+		for (Customer customer : customers) {
+			if (!customer.isHomePolicy() && !customer.isAutoPolicy() && !customer.isRentersPolicy()) {
+				noPolicies.add(customer);
+			}
+		}
+		
+		
+		return noPolicies;
 	}
 
 
@@ -150,7 +159,20 @@ public class CodingCompCsvUtil {
 	 * @return -- List of vendors within a given area, filtered by scope and vendor rating.
 	 */
 	public List<Vendor> getVendorsWithGivenRatingThatAreInScope(String filePath, String area, boolean inScope, int vendorRating) {
-		return null;
+		
+		List<Vendor> vendors = readCsvFile(filePath, Vendor.class);
+		
+		/* List<Vendor> ratingScopeVendors = new ArrayList<Vendor>();
+		
+		for (Vendor vendor : vendors) {
+			if (inScope && vendor.getArea().equals(area) && vendor.getVendorRating() == vendorRating) {
+				ratingScopeVendors.add(vendor);
+			} else if (!vendor.getArea().equals(area) && vendor.getVendorRating() == vendorRating) {
+				ratingScopeVendors.add(vendor);
+			}
+		} */
+		
+		return vendors;
 	}
 
 
