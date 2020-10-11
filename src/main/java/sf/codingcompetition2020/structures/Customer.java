@@ -9,7 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Customer {
+public class Customer implements Comparable<Customer> {
+	
 	private int customerId;
 	private String firstName;
 	private String lastName;
@@ -27,15 +28,15 @@ public class Customer {
 	private Integer vehiclesInsured;
 	
 	public Customer(String args) {
-		//System.out.println(args);
+		// format the argument string to account for the JSON
 		args = args.replaceAll(",,", ",~,");
 		args = args.replaceAll("\",\"", " ~ ");
 		args = args.replaceAll("},", "}~");
 		
+		// split the arguments by ","
 		String[] arguments = args.split(",");
 		
-		//System.out.println(Arrays.asList(arguments));
-		
+		// assign the non-json variables
 		customerId = Integer.parseInt(arguments[0]);
 		firstName = arguments[1];
 		lastName = arguments[2];
@@ -44,7 +45,6 @@ public class Customer {
 		agentId = Integer.parseInt(arguments[5]);
 		agentRating = Short.parseShort(arguments[6]);
 		primaryLanguage = arguments[7];
-		
 		homePolicy = arguments[9].equals("true");
 		autoPolicy = arguments[10].equals("true");
 		rentersPolicy = arguments[11].equals("true");
@@ -52,8 +52,13 @@ public class Customer {
 		yearsOfService = Short.parseShort(arguments[13]);
 		vehiclesInsured = Integer.parseInt(arguments[14]);
 		
+		// create a new array list of dependents
 		dependents = new ArrayList<Dependent>();
+		
+		// checks if there is a JSON object
 		if (!arguments[8].equals("~")) {
+			
+			// if there is, reformat it with our ~ delimiter
 			String json = arguments[8];
 			json = json.replaceAll(" ~ ", "\",\"");
 			json = json.replaceAll("}~", "},");
@@ -61,19 +66,26 @@ public class Customer {
 			json = json.substring(1, json.length() - 1);
 			
 			try {
+				 // try to create a JSON array
 			     JSONArray jsonArray = new JSONArray(json);
 			     
-			     for (int i = 0 ; i < jsonArray.length(); i++) {
-			         JSONObject obj = jsonArray.getJSONObject(i);
-			         Dependent dependent = new Dependent(obj.getString("firstName"), obj.getString("lastName"));
+			     // iterate through each JSON element
+			     for (int dependent_index = 0 ; dependent_index < jsonArray.length(); dependent_index++) {
+			    	 // grab a JSON object from the array
+			         JSONObject json_dependent = jsonArray.getJSONObject(dependent_index);
+			         // initialize a dependent and add it to the list
+			         Dependent dependent = new Dependent(json_dependent.getString("firstName"), json_dependent.getString("lastName"));
 			         dependents.add(dependent);
 			     }
 			     
 			} catch (JSONException err){
+				 // print if there's an error
 			     System.out.println("error");
 			}
 		}
 	}
+	
+	// -------------------- default constructor --------------------
 	
 	public Customer(int customerId, String firstName, String lastName, int age, String area, int agentId,
 			short agentRating, String primaryLanguage, List<Dependent> dependents, boolean homePolicy,
@@ -96,6 +108,9 @@ public class Customer {
 		this.yearsOfService = yearsOfService;
 		this.vehiclesInsured = vehiclesInsured;
 	}
+	
+	// -------------------- getters and setters --------------------
+	
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -187,6 +202,18 @@ public class Customer {
 		this.vehiclesInsured = vehiclesInsured;
 	}
 	
-	
+	/**
+	 * Helper method for getCustomersRetainedForYearsByPlcyCostAsc() to sort customers by premium cost
+	 * @params Customer c
+	 * c: Customer object to compare to
+	 */
+	public int compareTo(Customer c) {
+		// null check
+	    if (getTotalMonthlyPremium() == null || c.getTotalMonthlyPremium() == null) {
+	      return 0;
+	    }
+	    // compare the premium costs
+	    return getTotalMonthlyPremium().compareTo(c.getTotalMonthlyPremium());
+	}
 
 }

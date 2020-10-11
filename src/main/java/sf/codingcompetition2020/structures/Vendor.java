@@ -6,13 +6,20 @@ public class Vendor {
 	private int vendorRating;
 	private boolean inScope;
 	
+	
+	
 	public Vendor(String args) {
+		// split our arguments by ","
 		String[] arguments = args.split(",");
+		
+		// set our parameters appropriately
 		vendorId = Integer.parseInt(arguments[0]);
 		area = arguments[1];
 		vendorRating = Integer.parseInt(arguments[2]);
 		inScope = arguments[3].equals("true");
 	}
+	
+	// -------------------- default constructor --------------------
 	
 	public Vendor(int vendorId, String area, int vendorRating, boolean inScope) {
 		super();
@@ -21,6 +28,9 @@ public class Vendor {
 		this.vendorRating = vendorRating;
 		this.inScope = inScope;
 	}
+	
+	// -------------------- getters and setters --------------------
+	
 	public int getVendorId() {
 		return vendorId;
 	}
@@ -44,8 +54,5 @@ public class Vendor {
 	}
 	public void setInScope(boolean inScope) {
 		this.inScope = inScope;
-	}
-	
-	
-	
+	}	
 }

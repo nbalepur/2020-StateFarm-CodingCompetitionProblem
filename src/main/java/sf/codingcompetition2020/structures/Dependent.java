@@ -5,8 +5,7 @@ public class Dependent {
 	private String lastName;
 	
 	
-	public Dependent() {}
-	
+	// -------------------- default constructors --------------------
 	
 	public Dependent(String firstName, String lastName) {
 		super();
@@ -14,6 +13,8 @@ public class Dependent {
 		this.lastName = lastName;
 	}
 
+	// -------------------- getters and setters --------------------
+	
 	public String getFirstName() {
 		return firstName;
 	}

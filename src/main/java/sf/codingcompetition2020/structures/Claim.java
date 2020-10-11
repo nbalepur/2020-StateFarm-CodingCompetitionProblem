@@ -1,18 +1,23 @@
 package sf.codingcompetition2020.structures;
 
 public class Claim {
+	
 	private int claimId;
 	private int customerId;
 	private boolean closed;
 	private int monthsOpen;
 	
 	public Claim(String args) {
+		// split the argument string by ","
 		String[] arguments = args.split(",");
+		// declare the variables appropriately
 		claimId = Integer.parseInt(arguments[0]);
 		customerId = Integer.parseInt(arguments[1]);
 		closed = arguments[2].equals("true");
 		monthsOpen = Integer.parseInt(arguments[3]);
 	}
+	
+	// -------------------- default constructor --------------------
 	
 	public Claim(int claimId, int customerId, boolean closed, int monthsOpen) {
 		super();
@@ -21,6 +26,8 @@ public class Claim {
 		this.closed = closed;
 		this.monthsOpen = monthsOpen;
 	}
+	
+	// -------------------- getters and setters --------------------
 	
 	public int getClaimId() {
 		return claimId;
@@ -46,7 +53,4 @@ public class Claim {
 	public void setMonthsOpen(int monthsOpen) {
 		this.monthsOpen = monthsOpen;
 	}
-	
-	
-	
 }

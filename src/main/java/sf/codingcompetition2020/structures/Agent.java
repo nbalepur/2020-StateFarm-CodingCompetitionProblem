@@ -9,13 +9,18 @@ public class Agent {
 	private String lastName;
 	
 	public Agent(String args) {
+		// split the arguments by ","
 		String[] arguments = args.split(",");
+		
+		// assign the variables appropriately
 		agentId = Integer.parseInt(arguments[0]);
 		area = arguments[1];
 		language = arguments[2];
 		firstName = arguments[3];
 		lastName = arguments[4];
 	}
+	
+	// -------------------- default constructor --------------------
 	
 	public Agent(int agentId, String area, String language, String firstName, String lastName) {
 		super();
@@ -25,6 +30,8 @@ public class Agent {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	
+	// -------------------- getters and setters --------------------
 	
 	public int getAgentId() {
 		return agentId;
@@ -56,8 +63,5 @@ public class Agent {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
-	
 	
 }
