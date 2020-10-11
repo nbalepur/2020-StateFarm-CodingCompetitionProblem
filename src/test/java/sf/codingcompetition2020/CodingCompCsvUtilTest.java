@@ -56,7 +56,7 @@ public class CodingCompCsvUtilTest{
 	//#4
 	@Test
 	public void countCustomersFromCitythatUseAgent() {
-		Map<String, String> csvFilePaths = new HashMap<>();
+		Map<String, String> csvFilePaths = new HashMap<String, String>();
 		
 		csvFilePaths.put(agentList, agentFilePath);
 		csvFilePaths.put(customerList, customerFilePath);
@@ -111,7 +111,7 @@ public class CodingCompCsvUtilTest{
 	//#10
 	@Test
 	public void getCountCustomersWithClaims() {
-		Map<String, String> csvFilePaths = new HashMap<>();
+		Map<String, String> csvFilePaths = new HashMap<String, String>();
 		
 		csvFilePaths.put(customerList, customerFilePath);
 		csvFilePaths.put(claimList, claimFilePath);
